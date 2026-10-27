@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnóstico de Gobernanza y Madurez de IA | MagiHub</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+              dark: '#0B0F19',
+              card: '#111827',
+              border: '#1F2937'
+            },
+            accent: {
+              cyan: '#06b6d4',
+              emerald: '#10b981',
+              amber: '#f59e0b',
+              rose: '#f43f5e'
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #0B0F19;
+      color: #F3F4F6;
+    }
+
+    .glass-panel {
+      background: rgba(17, 24, 39, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .glow-accent {
+      box-shadow: 0 0 35px -5px rgba(99, 102, 241, 0.25);
+    }
+
+    /* Print styles for executive report */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #111827 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-only {
+        display: block !important;
+      }
+      .glass-panel {
+        background: #ffffff !important;
+        border: 1px solid #e5e7eb !important;
+        box-shadow: none !important;
+      }
+      .text-gray-400, .text-gray-300 {
+        color: #4b5563 !important;
+      }
+      .text-white {
+        color: #111827 !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
+
+  <!-- Background decorative glows -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0 no-print">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/2 -right-40 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl"></div>
+  </div>
+
+  <!-- Top Navigation Bar -->
+  <header class="relative z-10 border-b border-gray-800/80 bg-brand-dark/80 backdrop-blur-md px-6 py-4">
+    <div class="max-w-6xl mx-auto flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-400 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/30">
+          M
+        </div>
+        <div>
+          <span class="text-lg font-bold tracking-tight text-white">Magi<span class="text-cyan-400">Hub</span></span>
+          <span class="hidden sm:inline-block ml-2 px-2 py-0.5 text-[10px] font-semibold tracking-wide uppercase bg-indigo-950 text-indigo-300 border border-indigo-700/50 rounded-full">AI Governance Suite</span>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3 text-xs sm:text-sm font-medium">
+        <span class="text-gray-400 hidden sm:inline">Evaluación Estratégica 2026</span>
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-950/70 text-emerald-400 border border-emerald-800/40">
+          <span class="w-1.5 h-1.5 mr-1.5 bg-emerald-400 rounded-full animate-pulse"></span> Gratuito & Confidencial
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Application Container -->
+  <main class="relative z-10 flex-grow max-w-4xl w-full mx-auto p-4 sm:p-6 md:p-8 flex items-center justify-center">
+
+    <!-- SCREEN 1: HERO & LEAD ONBOARDING -->
+    <section id="screen-intro" class="w-full">
+      <div class="glass-panel glow-accent rounded-3xl p-6 sm:p-10 md:p-12 border border-gray-800">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-indigo-900/40 text-indigo-300 border border-indigo-500/30 mb-6">
+          <i data-lucide="shield-check" class="w-4 h-4 text-cyan-400"></i>
+          Framework Ejecutivo de Madurez en IA
+        </div>
+        
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-4 leading-tight">
+          Diagnóstico de Madurez y Gobernanza de <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-400 to-emerald-400">Inteligencia Artificial</span>
+        </h1>
+        
+        <p class="text-base sm:text-lg text-gray-300 mb-8 max-w-2xl leading-relaxed">
+          Evalúa en 4 minutos el control, riesgos, costos y escalabilidad de las soluciones de IA en tu organización. Obtén tu <strong class="text-white">Índice Global (0-100)</strong>, el <strong class="text-white">Índice de Brecha de Visibilidad</strong> y una hoja de ruta con <strong class="text-white">3 prioridades clave a 90 días</strong>.
+        </p>
+
+        <!-- Form for Lead & Stage -->
+        <form id="lead-form" class="space-y-6 border-t border-gray-800 pt-6">
+          <h2 class="text-lg font-semibold text-white flex items-center gap-2">
+            <i data-lucide="building-2" class="w-5 h-5 text-indigo-400"></i> Contexto Inicial de tu Empresa
+          </h2>
+
+          <!-- Context Question 1: Stage -->
+          <div>
+            <label class="block text-sm font-medium text-gray-200 mb-2">
+              ¿En qué etapa se encuentra tu organización respecto a la IA? <span class="text-rose-400">*</span>
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <label class="flex items-center gap-3 p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/80 cursor-pointer transition">
+                <input type="radio" name="stage" value="Exploración" required class="text-indigo-600 focus:ring-indigo-500">
+                <div>
+                  <span class="block text-sm font-semibold text-white">Exploración</span>
+                  <span class="text-xs text-gray-400">Pruebas aisladas, curiosidad de equipos.</span>
+                </div>
+              </label>
+              <label class="flex items-center gap-3 p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/80 cursor-pointer transition">
+                <input type="radio" name="stage" value="Pilotos" class="text-indigo-600 focus:ring-indigo-500">
+                <div>
+                  <span class="block text-sm font-semibold text-white">Pilotos y PoCs</span>
+                  <span class="text-xs text-gray-400">Casos de uso puntuales en validación.</span>
+                </div>
+              </label>
+              <label class="flex items-center gap-3 p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/80 cursor-pointer transition">
+                <input type="radio" name="stage" value="Uso extendido" class="text-indigo-600 focus:ring-indigo-500">
+                <div>
+                  <span class="block text-sm font-semibold text-white">Uso Extendido</span>
+                  <span class="text-xs text-gray-400">Múltiples áreas operando herramientas de IA.</span>
+                </div>
+              </label>
+              <label class="flex items-center gap-3 p-3.5 rounded-xl border border-gray-800 bg-gray-900/60 hover:bg-gray-800/80 cursor-pointer transition">
+                <input type="radio" name="stage" value="Escalamiento" class="text-indigo-600 focus:ring-indigo-500">
+                <div>
+                  <span class="block text-sm font-semibold text-white">Escalamiento</span>
+                  <span class="text-xs text-gray-400">IA integrada en productos, procesos core y agentes.</span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Contact Fields -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label for="lead-name" class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">Nombre Completo <span class="text-rose-400">*</span></label>
+              <input type="text" id="lead-name" required placeholder="Ej. Carlos Mendoza" 
+                class="w-full px-4 py-3 rounded-xl bg-gray-900/90 border border-gray-700/80 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+            </div>
+            <div>
+              <label for="lead-email" class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">Email Corporativo <span class="text-rose-400">*</span></label>
+              <input type="email" id="lead-email" required placeholder="carlos@empresa.com" 
+                class="w-full px-4 py-3 rounded-xl bg-gray-900/90 border border-gray-700/80 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+            </div>
+            <div>
+              <label for="lead-company" class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">Empresa / Organización <span class="text-rose-400">*</span></label>
+              <input type="text" id="lead-company" required placeholder="Ej. FinCorp Technologies" 
+                class="w-full px-4 py-3 rounded-xl bg-gray-900/90 border border-gray-700/80 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+            </div>
+            <div>
+              <label for="lead-role" class="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-1">Cargo / Rol <span class="text-rose-400">*</span></label>
+              <input type="text" id="lead-role" required placeholder="Ej. CTO / VP / Head de Data / CISO" 
+                class="w-full px-4 py-3 rounded-xl bg-gray-900/90 border border-gray-700/80 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition">
+            </div>
+          </div>
+
+          <div class="space-y-3 rounded-xl border border-gray-800 bg-gray-900/40 p-4">
+            <label class="flex items-start gap-3 text-xs text-gray-300">
+              <input id="consent-processing" type="checkbox" required class="mt-0.5 accent-indigo-500">
+              <span>Autorizo a MagiHub a procesar mis datos de contacto y respuestas para generar y registrar este diagnóstico. He leído el <a href="PRIVACY_POLICY_URL" target="_blank" rel="noopener noreferrer" class="text-cyan-400 underline">aviso de privacidad</a>. <span class="text-rose-400">*</span></span>
+            </label>
+            <label class="flex items-start gap-3 text-xs text-gray-300">
+              <input id="consent-marketing" type="checkbox" class="mt-0.5 accent-indigo-500">
+              <span>Quiero recibir por correo recursos, análisis e invitaciones comerciales de MagiHub. Puedo retirar mi consentimiento posteriormente.</span>
+            </label>
+            <div class="text-[11px] text-gray-500">El diagnóstico se registra en una hoja de cálculo de Google administrada por MagiHub. No introduzcas secretos comerciales, credenciales ni datos personales de terceros en las respuestas.</div>
+          </div>
+          <!-- Honeypot antispam: debe permanecer vacío y oculto a personas -->
+          <div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden;">
+            <label for="website-field">No rellenar</label>
+            <input id="website-field" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-600 to-cyan-600 hover:from-indigo-500 hover:to-cyan-500 text-white font-semibold text-base shadow-lg shadow-indigo-600/30 transition transform hover:-translate-y-0.5">
+            <span>Comenzar Diagnóstico (20 Preguntas)</span>
+            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: QUESTIONNAIRE (DIMENSIONS BLOCKS) -->
+    <section id="screen-quiz" class="w-full hidden">
+      <div class="glass-panel rounded-3xl p-6 sm:p-8 md:p-10 border border-gray-800">
+        
+        <!-- Header & Progress bar -->
+        <div class="mb-6">
+          <div class="flex items-center justify-between text-xs sm:text-sm font-semibold mb-2">
+            <span id="dimension-tag" class="px-3 py-1 rounded-full bg-indigo-950/80 text-indigo-300 border border-indigo-700/50 flex items-center gap-1.5">
+              <i data-lucide="compass" class="w-3.5 h-3.5 text-cyan-400"></i>
+              <span id="dimension-name">Dimensión 1: Estrategia</span>
+            </span>
+            <span class="text-gray-400 font-mono" id="progress-text">Pregunta 1 de 20</span>
+          </div>
+          
+          <!-- Outer Progress Track -->
+          <div class="w-full h-2.5 bg-gray-800 rounded-full overflow-hidden">
+            <div id="progress-bar" class="h-full bg-gradient-to-r from-indigo-500 via-cyan-400 to-emerald-400 w-[5%] transition-all duration-300"></div>
+          </div>
+        </div>
+
+        <!-- Question Prompt Area -->
+        <div class="mb-6">
+          <h2 id="question-text" class="text-xl sm:text-2xl font-bold text-white mb-2 leading-relaxed">
+            ¿La organización tiene objetivos definidos sobre para qué utilizar la inteligencia artificial y qué resultados espera obtener?
+          </h2>
+          <p class="text-sm text-gray-400">Selecciona el nivel que mejor represente la realidad operativa de tu organización.</p>
+        </div>
+
+        <!-- Options Scale List -->
+        <div class="space-y-3 mb-8" id="options-container">
+          <!-- Dynamically generated or template options with standard scale -->
+        </div>
+
+        <!-- Footer Navigation -->
+        <div class="flex items-center justify-between pt-5 border-t border-gray-800/80">
+          <button id="btn-prev" onclick="goToPrevQuestion()" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-gray-700 bg-gray-900/60 hover:bg-gray-800 text-gray-300 text-sm font-medium transition disabled:opacity-30 disabled:pointer-events-none">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            <span>Anterior</span>
+          </button>
+          
+          <div class="text-xs text-gray-500 text-right">
+            Selecciona una opción para avanzar
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SCREEN 3: FINAL CONTEXTUAL QUESTION (PRIORITY CHALLENGE) -->
+    <section id="screen-priority" class="w-full hidden">
+      <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-gray-800">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-cyan-950/60 text-cyan-300 border border-cyan-500/30 mb-6">
+          <i data-lucide="target" class="w-4 h-4 text-cyan-400"></i>
+          Paso Final de Personalización
+        </div>
+
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white mb-3">
+          ¿Cuál es hoy el principal desafío u obstáculo prioritario de tu organización?
+        </h2>
+        <p class="text-gray-300 text-sm mb-6">
+          Esta respuesta nos permitirá ponderar y estructurar las recomendaciones inmediatas para tu plan de acción de 90 días.
+        </p>
+
+        <div class="space-y-3 mb-8" id="challenge-options">
+          <label class="flex items-start gap-3 p-4 rounded-xl border border-gray-800 bg-gray-900/50 hover:bg-indigo-950/30 hover:border-indigo-600/50 cursor-pointer transition">
+            <input type="radio" name="main_challenge" value="Riesgos, Seguridad y Privacidad" class="mt-1 text-indigo-600 focus:ring-indigo-500" required checked>
+            <div>
+              <span class="block text-sm font-semibold text-white">Riesgos, Seguridad y Fuga de Datos</span>
+              <span class="text-xs text-gray-400">Prevenir que datos confidenciales o propiedad intelectual terminen en modelos públicos sin control.</span>
+            </div>
+          </label>
+          <label class="flex items-start gap-3 p-4 rounded-xl border border-gray-800 bg-gray-900/50 hover:bg-indigo-950/30 hover:border-indigo-600/50 cursor-pointer transition">
+            <input type="radio" name="main_challenge" value="Visibilidad y Shadow AI" class="mt-1 text-indigo-600 focus:ring-indigo-500">
+            <div>
+              <span class="block text-sm font-semibold text-white">Visibilidad y Control de "Shadow AI"</span>
+              <span class="text-xs text-gray-400">Detectar qué herramientas, suscripciones y modelos están utilizando los empleados de manera no regulada.</span>
+            </div>
+          </label>
+          <label class="flex items-start gap-3 p-4 rounded-xl border border-gray-800 bg-gray-900/50 hover:bg-indigo-950/30 hover:border-indigo-600/50 cursor-pointer transition">
+            <input type="radio" name="main_challenge" value="Costos y Retorno de Inversión" class="mt-1 text-indigo-600 focus:ring-indigo-500">
+            <div>
+              <span class="block text-sm font-semibold text-white">Control de Costos y Medición de ROI</span>
+              <span class="text-xs text-gray-400">Evitar dispersión presupuestaria en tokens, APIs redundantes y justificar el valor real al negocio.</span>
+            </div>
+          </label>
+          <label class="flex items-start gap-3 p-4 rounded-xl border border-gray-800 bg-gray-900/50 hover:bg-indigo-950/30 hover:border-indigo-600/50 cursor-pointer transition">
+            <input type="radio" name="main_challenge" value="Políticas y Cumplimiento Regulatorio" class="mt-1 text-indigo-600 focus:ring-indigo-500">
+            <div>
+              <span class="block text-sm font-semibold text-white">Políticas Claras y Cumplimiento Regulatorio</span>
+              <span class="text-xs text-gray-400">Establecer marcos de uso aceptable, auditoría y preparación ante regulaciones (p.ej. Ley de IA / normativas de datos).</span>
+            </div>
+          </label>
+          <label class="flex items-start gap-3 p-4 rounded-xl border border-gray-800 bg-gray-900/50 hover:bg-indigo-950/30 hover:border-indigo-600/50 cursor-pointer transition">
+            <input type="radio" name="main_challenge" value="Integración y Escalamiento Técnico" class="mt-1 text-indigo-600 focus:ring-indigo-500">
+            <div>
+              <span class="block text-sm font-semibold text-white">Integración Técnica y Escalamiento</span>
+              <span class="text-xs text-gray-400">Gestionar múltiples LLMs y proveedores sin rehacer sistemas ni quedar atados a un único ecosistema (Vendor Lock-in).</span>
+            </div>
+          </label>
+        </div>
+
+        <button onclick="calculateAndShowResults()" class="w-full inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 text-gray-950 font-bold text-base shadow-lg shadow-emerald-500/20 transition transform hover:-translate-y-0.5">
+          <span>Generar Diagnóstico Ejecutivo</span>
+          <i data-lucide="check-circle-2" class="w-5 h-5 text-gray-950"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- SCREEN 4: EXECUTIVE RESULTS DASHBOARD -->
+    <section id="screen-results" class="w-full hidden space-y-6">
+      <div id="save-status" role="status" aria-live="polite" class="hidden rounded-xl border border-gray-700 bg-gray-900/80 p-4 text-sm text-gray-300 no-print"></div>
+      
+      <!-- Top Score Summary Banner -->
+      <div class="glass-panel glow-accent rounded-3xl p-6 sm:p-8 md:p-10 border border-gray-800">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-gray-800">
+          <div>
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-900/50 text-indigo-300 border border-indigo-700/50 mb-3">
+              <i data-lucide="file-check-2" class="w-4 h-4 text-cyan-400"></i>
+              Informe Ejecutivo de Madurez en Gobernanza de IA
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-white" id="res-lead-header">
+              Resultados para <span id="res-company-name" class="text-cyan-400">Tu Organización</span>
+            </h2>
+            <p class="text-sm text-gray-400 mt-1">
+              Evaluación para <span id="res-user-name" class="font-medium text-gray-200"></span> (<span id="res-user-role" class="text-gray-300"></span>) • Etapa: <span id="res-stage-pill" class="text-indigo-400 font-semibold"></span>
+            </p>
+          </div>
+
+          <!-- Print / Export Actions -->
+          <div class="flex items-center gap-2 no-print">
+            <button onclick="window.print()" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gray-800/90 hover:bg-gray-700 text-gray-200 text-xs font-semibold border border-gray-700 transition">
+              <i data-lucide="printer" class="w-4 h-4"></i> Guardar PDF / Imprimir
+            </button>
+            <button onclick="exportDataJSON()" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-gray-800/90 hover:bg-gray-700 text-gray-300 text-xs font-semibold border border-gray-700 transition" title="Exportar datos brutos JSON">
+              <i data-lucide="code" class="w-4 h-4"></i> JSON
+            </button>
+          </div>
+        </div>
+
+        <!-- Scores Grid: Global Maturity + Visibility Gap -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 pt-6">
+          
+          <!-- Metric 1: Global Score Gauge -->
+          <div class="md:col-span-7 bg-gray-900/60 rounded-2xl p-6 border border-gray-800 flex flex-col sm:flex-row items-center gap-6">
+            <div class="relative w-36 h-36 flex-shrink-0 flex items-center justify-center">
+              <svg class="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="50" stroke="#1f2937" stroke-width="12" fill="none"/>
+                <circle id="score-circle" cx="60" cy="60" r="50" stroke="url(#scoreGrad)" stroke-width="12" 
+                        stroke-dasharray="314.15" stroke-dashoffset="314.15" stroke-linecap="round" fill="none"
+                        class="transition-all duration-1000 ease-out"/>
+                <defs>
+                  <linearGradient id="scoreGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#6366f1" />
+                    <stop offset="50%" stop-color="#06b6d4" />
+                    <stop offset="100%" stop-color="#10b981" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                <span id="res-score-number" class="text-3xl font-extrabold text-white tracking-tight">0</span>
+                <span class="text-[10px] uppercase font-bold text-gray-400">/ 100 pts</span>
+              </div>
+            </div>
+
+            <div>
+              <span class="text-xs uppercase tracking-wider font-semibold text-gray-400">Perfil de Madurez Global</span>
+              <h3 id="res-tier-title" class="text-xl font-bold text-white mt-0.5 mb-1">Calculando...</h3>
+              <p id="res-tier-desc" class="text-xs sm:text-sm text-gray-300 leading-relaxed"></p>
+            </div>
+          </div>
+
+          <!-- Metric 2: Visibility Gap Index -->
+          <div class="md:col-span-5 bg-gray-900/60 rounded-2xl p-6 border border-gray-800 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs uppercase tracking-wider font-semibold text-gray-400">Brecha de Visibilidad</span>
+                <span id="res-unknown-badge" class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-950/70 text-amber-300 border border-amber-800/40">Moderada</span>
+              </div>
+              <div class="flex items-baseline gap-2">
+                <span id="res-unknown-count" class="text-3xl font-black text-white">0</span>
+                <span class="text-xs text-gray-400">respuestas "No lo sé" de 20</span>
+              </div>
+              <p id="res-unknown-explanation" class="text-xs text-gray-300 mt-2 leading-relaxed">
+                Indica el nivel de opacidad respecto al uso de IA en áreas descentralizadas (Shadow AI).
+              </p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-gray-800/80 text-[11px] text-gray-400 flex items-center gap-1.5">
+              <i data-lucide="info" class="w-3.5 h-3.5 text-cyan-400 flex-shrink-0"></i>
+              No equivale a falta de controles, sino a falta de telemetría y supervisión central.
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Dimension Breakdown (7 Dimensions) -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-gray-800">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h3 class="text-lg sm:text-xl font-bold text-white">Desglose por Dimensiones de Gobernanza</h3>
+            <p class="text-xs sm:text-sm text-gray-400">Rendimiento porcentual de 0 a 100% por área clave de gestión.</p>
+          </div>
+          <span class="text-xs text-indigo-400 font-mono hidden sm:inline">Puntajes normalizados</span>
+        </div>
+
+        <div id="dimensions-breakdown-list" class="space-y-4">
+          <!-- Dynamically filled with bars -->
+        </div>
+      </div>
+
+      <!-- Action Plan: Top 3 90-Day Priorities -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-8 border border-indigo-900/40 bg-gradient-to-b from-indigo-950/20 to-transparent">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-9 h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400">
+            <i data-lucide="calendar" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 class="text-lg sm:text-xl font-bold text-white">Plan de Acción Estratégico: 3 Prioridades a 90 Días</h3>
+            <p class="text-xs sm:text-sm text-gray-400">Recomendaciones focalizadas basadas en tus mayores brechas y tu principal desafío (<span id="res-challenge-echo" class="text-cyan-300 font-semibold"></span>).</p>
+          </div>
+        </div>
+
+        <div id="recommendations-container" class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+          <!-- Recommendations dynamic cards -->
+        </div>
+      </div>
+
+      <!-- Commercial CTA: MagiHub Value Proposition -->
+      <div class="glass-panel rounded-3xl p-6 sm:p-10 border border-cyan-500/30 bg-gradient-to-br from-indigo-950/50 via-gray-900/80 to-cyan-950/40 text-center no-print">
+        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950 text-emerald-300 border border-emerald-700/50 uppercase tracking-wider inline-block mb-3">
+          Siguiente Paso Recomendado
+        </span>
+        <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-3">
+          Convierte este diagnóstico en una ventaja competitiva con MagiHub
+        </h3>
+        <p class="text-sm sm:text-base text-gray-300 max-w-2xl mx-auto mb-8">
+          MagiHub te permite centralizar el catálogo de herramientas de IA, auditar prompts confidenciales, controlar el gasto de tokens por área y gobernar modelos con políticas automáticas.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="https://wa.me/?text=Hola%20MagiHub,%20acabo%20de%20realizar%20el%20Diagn%C3%B3stico%20de%20Madurez%20de%20IA%20y%20me%20gustar%C3%ADa%20agendar%20una%20sesi%C3%B3n%20para%20revisar%20mi%20hoja%20de%20ruta." target="_blank" rel="noopener" 
+             class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-gray-950 font-bold text-sm shadow-lg shadow-emerald-500/20 transition transform hover:-translate-y-0.5">
+            <i data-lucide="message-circle" class="w-4 h-4"></i> Conversar con un Consultor de MagiHub
+          </a>
+          
+          <button onclick="handleSimulateSchedule()" 
+             class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm shadow-lg shadow-indigo-600/30 transition transform hover:-translate-y-0.5">
+            <i data-lucide="video" class="w-4 h-4"></i> Agendar Demostración Ejecutiva
+          </button>
+        </div>
+
+        <!-- Custom Notification Message Box instead of alert() -->
+        <div id="booking-msg" class="hidden mt-6 p-4 rounded-xl bg-indigo-950/80 border border-indigo-700/60 text-sm text-indigo-200 max-w-md mx-auto animate-fade-in">
+          <i data-lucide="check" class="w-4 h-4 text-cyan-400 inline mr-1"></i>
+          ¡Solicitud recibida! Un especialista de MagiHub contactará a <span id="booking-email-confirm" class="font-bold text-white"></span> con la agenda disponible.
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="relative z-10 border-t border-gray-800/80 bg-brand-dark/90 py-6 text-center text-xs text-gray-500">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-2">
+        <span class="font-bold text-gray-400">MagiHub &copy; 2026</span>
+        <span>•</span>
+        <span>AI Governance, Security & FinOps Platform</span>
+      </div>
+      <div>
+        Evaluación orientativa de madurez. No constituye auditoría ni certificación vinculante.
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT: APPLICATION LOGIC & DATA ENGINE -->
+  <script>
+    // CONFIGURACIÓN MAGIHUB: pega aquí la URL del despliegue web de Google Apps Script.
+    // No pegues contraseñas ni claves privadas en este HTML público.
+    const MAGIHUB_SHEETS_ENDPOINT = "https://script.google.com/a/macros/imagineapps.co/s/AKfycbwY-BQ9VSZv7F-yeaBuD-rpiLdGz7jnW_n2yauqv9aY4Ir1xP-iji7j7VGi4ssAT3--/exec";
+
+    // --- 1. DATA DEFINITIONS ---
+    const DIMENSIONS = [
+      { id: 1, name: "Estrategia y responsabilidades", short: "Estrategia", icon: "compass", questionIndices: [0, 1, 2] },
+      { id: 2, name: "Inventario y visibilidad", short: "Visibilidad & Shadow AI", icon: "eye", questionIndices: [3, 4, 5] },
+      { id: 3, name: "Riesgos, seguridad y privacidad", short: "Riesgos & Privacidad", icon: "shield-alert", questionIndices: [6, 7, 8] },
+      { id: 4, name: "Políticas y cumplimiento", short: "Políticas & Compliance", icon: "scale", questionIndices: [9, 10, 11] },
+      { id: 5, name: "Monitoreo y desempeño", short: "Monitoreo & Calidad", icon: "activity", questionIndices: [12, 13, 14] },
+      { id: 6, name: "Costos y valor de negocio", short: "Costos & ROI FinOps", icon: "dollar-sign", questionIndices: [15, 16, 17] },
+      { id: 7, name: "Integración y escalabilidad", short: "Integración & Escalamiento", icon: "cpu", questionIndices: [18, 19] }
+    ];
+
+    const QUESTIONS = [
+      // Dimensión 1: Estrategia y responsabilidades
+      {
+        dimId: 1,
+        text: "¿La organización tiene objetivos definidos sobre para qué utilizar la inteligencia artificial y qué resultados espera obtener?"
+      },
+      {
+        dimId: 1,
+        text: "¿Están claramente asignadas las responsabilidades sobre la aprobación, supervisión y gestión de las iniciativas de IA?"
+      },
+      {
+        dimId: 1,
+        text: "¿Existe un proceso para priorizar los proyectos de IA según su valor de negocio, riesgo y viabilidad?"
+      },
+      // Dimensión 2: Inventario y visibilidad
+      {
+        dimId: 2,
+        text: "¿La empresa mantiene un inventario actualizado de las herramientas, modelos, aplicaciones y agentes de IA que utiliza?"
+      },
+      {
+        dimId: 2,
+        text: "¿Puede identificar qué áreas o colaboradores utilizan herramientas de IA, incluidas aquellas adoptadas directamente por los equipos?"
+      },
+      {
+        dimId: 2,
+        text: "¿Puede conocer qué datos se utilizan en cada solución de IA, qué proveedores intervienen y para qué propósito se procesa la información?"
+      },
+      // Dimensión 3: Riesgos, seguridad y privacidad
+      {
+        dimId: 3,
+        text: "¿Se evalúan los riesgos antes de implementar una nueva solución de IA o introducir cambios importantes?"
+      },
+      {
+        dimId: 3,
+        text: "¿Existen controles para evitar que información confidencial, datos personales o información estratégica se utilicen de forma inadecuada en herramientas de IA?"
+      },
+      {
+        dimId: 3,
+        text: "¿Hay mecanismos para detectar, reportar y atender incidentes relacionados con las soluciones de IA?"
+      },
+      // Dimensión 4: Políticas y cumplimiento
+      {
+        dimId: 4,
+        text: "¿La organización cuenta con políticas claras sobre qué usos de IA están permitidos, restringidos o prohibidos?"
+      },
+      {
+        dimId: 4,
+        text: "¿Se evalúan las obligaciones legales, contractuales y regulatorias aplicables a cada iniciativa de IA?"
+      },
+      {
+        dimId: 4,
+        text: "¿Existen procedimientos para documentar decisiones, mantener trazabilidad y demostrar cómo se supervisan los sistemas de IA?"
+      },
+      // Dimensión 5: Monitoreo y desempeño
+      {
+        dimId: 5,
+        text: "¿Se supervisan regularmente la calidad, precisión y confiabilidad de los resultados generados por los sistemas de IA?"
+      },
+      {
+        dimId: 5,
+        text: "¿La empresa puede detectar cambios en el comportamiento de sus soluciones, errores recurrentes o resultados inesperados?"
+      },
+      {
+        dimId: 5,
+        text: "¿Se revisan periódicamente los permisos, accesos y condiciones de uso de los sistemas de IA que están en operación?"
+      },
+      // Dimensión 6: Costos y valor de negocio
+      {
+        dimId: 6,
+        text: "¿La organización puede identificar cuánto gasta en IA por proveedor, modelo, aplicación, proyecto o área, según corresponda?"
+      },
+      {
+        dimId: 6,
+        text: "¿Se mide si las iniciativas de IA están generando los beneficios esperados, como productividad, calidad, ahorro o ingresos?"
+      },
+      {
+        dimId: 6,
+        text: "¿Existen mecanismos para identificar consumos innecesarios, duplicidad de herramientas o oportunidades de optimización del gasto en IA?"
+      },
+      // Dimensión 7: Integración y escalabilidad
+      {
+        dimId: 7,
+        text: "¿La empresa puede integrar y gestionar distintas soluciones o modelos de IA sin tener que reconstruir sus aplicaciones cada vez que cambia de proveedor?"
+      },
+      {
+        dimId: 7,
+        text: "¿Existen componentes, controles y procesos reutilizables que permitan desplegar nuevas soluciones de IA de manera consistente y controlada?"
+      }
+    ];
+
+    const SCALE_OPTIONS = [
+      { score: 0, label: "0 — No existe", desc: "No tenemos esta práctica en la organización." },
+      { score: 1, label: "1 — Inicial", desc: "Depende de iniciativas individuales o acciones informales." },
+      { score: 2, label: "2 — Parcial", desc: "Existen algunas prácticas, pero no se aplican consistentemente." },
+      { score: 3, label: "3 — Definido", desc: "Contamos con procesos y responsables formalmente establecidos." },
+      { score: 4, label: "4 — Gestionado", desc: "Medimos, supervisamos y mejoramos sistemáticamente." },
+      { score: "unknown", label: "No lo sé", desc: "No cuento con suficiente visibilidad para responder con certeza." }
+    ];
+
+    // --- 2. STATE STORAGE ---
+    let userProfile = {
+      name: "",
+      email: "",
+      company: "",
+      role: "",
+      stage: "",
+      challenge: ""
+    };
+
+    // Array of 20 items: each will store { score: number | 'unknown', timestamp: Date }
+    let answers = new Array(QUESTIONS.length).fill(null);
+    let currentQuestionIndex = 0;
+
+    // --- 3. ONBOARDING & NAVIGATION ---
+    const screenIntro = document.getElementById('screen-intro');
+    const screenQuiz = document.getElementById('screen-quiz');
+    const screenPriority = document.getElementById('screen-priority');
+    const screenResults = document.getElementById('screen-results');
+
+    document.getElementById('lead-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const stageEl = document.querySelector('input[name="stage"]:checked');
+      if (!stageEl) return;
+
+      userProfile.stage = stageEl.value;
+      userProfile.name = document.getElementById('lead-name').value.trim();
+      userProfile.email = document.getElementById('lead-email').value.trim();
+      userProfile.company = document.getElementById('lead-company').value.trim();
+      userProfile.role = document.getElementById('lead-role').value.trim();
+      userProfile.consentProcessing = document.getElementById('consent-processing').checked;
+      userProfile.marketingConsent = document.getElementById('consent-marketing').checked;
+      userProfile.website = document.getElementById('website-field').value.trim();
+
+      // Transition to quiz
+      screenIntro.classList.add('hidden');
+      screenQuiz.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      renderCurrentQuestion();
+    });
+
+    function renderCurrentQuestion() {
+      const q = QUESTIONS[currentQuestionIndex];
+      const dimension = DIMENSIONS.find(d => d.id === q.dimId);
+
+      // Update headers & progress bar
+      document.getElementById('dimension-name').textContent = `Dimensión ${dimension.id}: ${dimension.name}`;
+      document.getElementById('progress-text').textContent = `Pregunta ${currentQuestionIndex + 1} de ${QUESTIONS.length}`;
+      
+      const pct = Math.round(((currentQuestionIndex + 1) / QUESTIONS.length) * 100);
+      document.getElementById('progress-bar').style.width = `${pct}%`;
+
+      document.getElementById('question-text').textContent = q.text;
+
+      // Update Prev button state
+      document.getElementById('btn-prev').disabled = currentQuestionIndex === 0;
+
+      // Render scale options
+      const container = document.getElementById('options-container');
+      container.innerHTML = '';
+
+      const currentAnswer = answers[currentQuestionIndex];
+
+      SCALE_OPTIONS.forEach(opt => {
+        const isSelected = currentAnswer && currentAnswer.score === opt.score;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `w-full text-left p-4 rounded-2xl border transition-all duration-200 flex items-start gap-4 ${
+          isSelected 
+            ? 'bg-indigo-900/40 border-cyan-400 text-white shadow-md shadow-cyan-500/10 ring-1 ring-cyan-400' 
+            : 'bg-gray-900/60 border-gray-800 text-gray-300 hover:bg-gray-800/80 hover:border-gray-700'
+        }`;
+
+        // Color badge for score
+        let badgeColor = "bg-gray-800 text-gray-300";
+        if (opt.score === 4) badgeColor = "bg-emerald-950 text-emerald-400 border border-emerald-700/50";
+        else if (opt.score === 3) badgeColor = "bg-cyan-950 text-cyan-300 border border-cyan-700/50";
+        else if (opt.score === 2) badgeColor = "bg-indigo-950 text-indigo-300 border border-indigo-700/50";
+        else if (opt.score === 1) badgeColor = "bg-amber-950 text-amber-300 border border-amber-700/50";
+        else if (opt.score === 0) badgeColor = "bg-rose-950 text-rose-300 border border-rose-700/50";
+        else if (opt.score === 'unknown') badgeColor = "bg-gray-800 text-gray-400 border border-gray-700";
+
+        btn.innerHTML = `
+          <div class="px-2.5 py-1 rounded-lg text-xs font-bold font-mono ${badgeColor} flex-shrink-0 mt-0.5">
+            ${opt.score === 'unknown' ? '?' : opt.score}
+          </div>
+          <div class="flex-grow">
+            <div class="text-sm font-semibold text-white">${opt.label}</div>
+            <div class="text-xs text-gray-400 mt-0.5 leading-snug">${opt.desc}</div>
+          </div>
+          <div class="w-5 h-5 rounded-full border border-gray-700 flex items-center justify-center flex-shrink-0 mt-0.5 ${isSelected ? 'border-cyan-400 bg-cyan-400/20' : ''}">
+            ${isSelected ? '<div class="w-2.5 h-2.5 rounded-full bg-cyan-400"></div>' : ''}
+          </div>
+        `;
+
+        btn.onclick = () => handleSelectOption(opt.score);
+        container.appendChild(btn);
+      });
+
+      // Refresh icons if any were re-injected
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    }
+
+    function handleSelectOption(score) {
+      answers[currentQuestionIndex] = { score };
+
+      // Micro delay for visual tap response
+      setTimeout(() => {
+        if (currentQuestionIndex < QUESTIONS.length - 1) {
+          currentQuestionIndex++;
+          renderCurrentQuestion();
+        } else {
+          // Finished all 20 questions -> Go to Priority Screen
+          screenQuiz.classList.add('hidden');
+          screenPriority.classList.remove('hidden');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          if (window.lucide) lucide.createIcons();
+        }
+      }, 150);
+    }
+
+    function goToPrevQuestion() {
+      if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        renderCurrentQuestion();
+      }
+    }
+
+    // --- 4. CALCULATION & EXECUTIVE REPORT ENGINE ---
+    function calculateAndShowResults() {
+      const challengeEl = document.querySelector('input[name="main_challenge"]:checked');
+      userProfile.challenge = challengeEl ? challengeEl.value : "Gobernanza General";
+
+      // 1. Separation of scorable vs unknown answers
+      let totalPoints = 0;
+      let scorableCount = 0;
+      let unknownCount = 0;
+
+      // Dimension trackers: { points, scorableCount, unknownCount }
+      const dimStats = DIMENSIONS.map(d => ({
+        ...d,
+        points: 0,
+        scorableCount: 0,
+        unknownCount: 0,
+        pct: 0
+      }));
+
+      answers.forEach((ans, idx) => {
+        const q = QUESTIONS[idx];
+        const dStat = dimStats.find(d => d.id === q.dimId);
+
+        if (!ans || ans.score === 'unknown') {
+          unknownCount++;
+          if (dStat) dStat.unknownCount++;
+        } else {
+          const s = Number(ans.score);
+          totalPoints += s;
+          scorableCount++;
+          if (dStat) {
+            dStat.points += s;
+            dStat.scorableCount++;
+          }
+        }
+      });
+
+      // Global Maturity Score: Formula = (Points Obtained / (4 * Scorable Questions)) * 100
+      let globalMaturity = 0;
+      if (scorableCount > 0) {
+        globalMaturity = Math.round((totalPoints / (4 * scorableCount)) * 100);
+      }
+
+      // Calculate Dimension percentages
+      dimStats.forEach(d => {
+        if (d.scorableCount > 0) {
+          d.pct = Math.round((d.points / (4 * d.scorableCount)) * 100);
+        } else {
+          d.pct = 0; // If all were 'unknown'
+        }
+      });
+
+      // Show Results Screen
+      screenPriority.classList.add('hidden');
+      screenResults.classList.remove('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      // Populate Lead Header Info
+      document.getElementById('res-company-name').textContent = userProfile.company || 'Tu Organización';
+      document.getElementById('res-user-name').textContent = userProfile.name || 'Líder Ejecutivo';
+      document.getElementById('res-user-role').textContent = userProfile.role || 'Gobernanza';
+      document.getElementById('res-stage-pill').textContent = userProfile.stage;
+      document.getElementById('res-challenge-echo').textContent = userProfile.challenge;
+
+      // Animate Radial Gauge Score
+      const circle = document.getElementById('score-circle');
+      const scoreNumber = document.getElementById('res-score-number');
+      const circumference = 2 * Math.PI * 50; // r=50 -> 314.15
+      
+      scoreNumber.textContent = globalMaturity;
+      const offset = circumference - (globalMaturity / 100) * circumference;
+      setTimeout(() => {
+        circle.style.strokeDashoffset = offset;
+      }, 100);
+
+      // Determine Maturity Tier Profile
+      const tierTitle = document.getElementById('res-tier-title');
+      const tierDesc = document.getElementById('res-tier-desc');
+
+      if (globalMaturity < 25) {
+        tierTitle.textContent = "Nivel 1: Ad-hoc / Inicial";
+        tierTitle.className = "text-xl font-bold text-rose-400 mt-0.5 mb-1";
+        tierDesc.textContent = "La adopción de IA es reactiva y fragmentada. No existen políticas claras ni inventarios, lo que expone a la organización a fugas de datos y sobrecostos por herramientas duplicadas.";
+      } else if (globalMaturity < 50) {
+        tierTitle.textContent = "Nivel 2: Emergente / En Validación";
+        tierTitle.className = "text-xl font-bold text-amber-400 mt-0.5 mb-1";
+        tierDesc.textContent = "Existen iniciativas de IA con buen potencial, pero la gobernanza depende del entusiasmo individual de ciertas áreas. Se requiere formalizar responsabilidades, seguridad y catálogo de soluciones.";
+      } else if (globalMaturity < 75) {
+        tierTitle.textContent = "Nivel 3: Definido / Estratégico";
+        tierTitle.className = "text-xl font-bold text-cyan-400 mt-0.5 mb-1";
+        tierDesc.textContent = "Cuentan con procesos y responsables asignados para la mayoría de iniciativas. El reto inmediato es automatizar la observabilidad continua, la gestión de tokens y la prevención activa de riesgos.";
+      } else {
+        tierTitle.textContent = "Nivel 4: Optimizado / Gestionado";
+        tierTitle.className = "text-xl font-bold text-emerald-400 mt-0.5 mb-1";
+        tierDesc.textContent = "Gobernanza de clase empresarial con métricas de desempeño, auditoría y control de costos integrados. La organización está lista para escalar agentes y modelos propietarios con alta resiliencia.";
+      }
+
+      // Populate Visibility Gap Index
+      const unkCountEl = document.getElementById('res-unknown-count');
+      const unkBadgeEl = document.getElementById('res-unknown-badge');
+      const unkExplEl = document.getElementById('res-unknown-explanation');
+      unkCountEl.textContent = unknownCount;
+
+      if (unknownCount >= 7) {
+        unkBadgeEl.textContent = "Brecha Crítica (Alta Opacidad)";
+        unkBadgeEl.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-rose-950/80 text-rose-300 border border-rose-800/50";
+        unkExplEl.textContent = "Tienes una falta de visibilidad severa en más de un tercio de las áreas de control. Existe un riesgo inminente de 'Shadow AI' y fuga de datos en herramientas no autorizadas.";
+      } else if (unknownCount >= 3) {
+        unkBadgeEl.textContent = "Brecha Moderada";
+        unkBadgeEl.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-amber-950/80 text-amber-300 border border-amber-800/50";
+        unkExplEl.textContent = "Ciertas áreas técnicas o de negocio operan con silos de información. Es fundamental centralizar la telemetría y el inventario de modelos para tener certidumbre.";
+      } else {
+        unkBadgeEl.textContent = "Alta Transparencia";
+        unkBadgeEl.className = "px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-950/80 text-emerald-300 border border-emerald-800/50";
+        unkExplEl.textContent = "Cuentas con buen conocimiento del ecosistema. El diagnóstico refleja con alta fidelidad las fortalezas y debilidades de tu gobernanza actual.";
+      }
+
+      // Render Dimension Breakdown
+      renderDimensionBreakdown(dimStats);
+
+      // Render 90-Day Recommendations
+      renderActionPlan(dimStats, userProfile.challenge);
+
+      // Store in localStorage for persistence / lead backup
+      try {
+        localStorage.setItem('magihub_last_lead', JSON.stringify({
+          lead: userProfile,
+          globalMaturity,
+          unknownCount,
+          dimStats,
+          completedAt: new Date().toISOString()
+        }));
+      } catch (err) {
+        console.warn('Storage unavailable', err);
+      }
+
+      // Envío centralizado a Google Sheets. Se conserva el cálculo original.
+      const completedAt = new Date().toISOString();
+      const assessmentId = (window.crypto && crypto.randomUUID)
+        ? crypto.randomUUID()
+        : 'mh-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10);
+      const sheetsPayload = {
+        assessmentId,
+        completedAt,
+        source: 'MagiHub Diagnóstico HTML',
+        lead: { ...userProfile },
+        results: {
+          globalMaturity,
+          unknownCount,
+          scorableCount,
+          totalPoints,
+          dimensions: dimStats.map(d => ({ id: d.id, name: d.name, pct: d.pct, points: d.points, scorableCount: d.scorableCount, unknownCount: d.unknownCount }))
+        },
+        responses: answers.map((a, i) => ({
+          questionNumber: i + 1,
+          questionText: QUESTIONS[i].text,
+          dimensionId: QUESTIONS[i].dimId,
+          score: a ? a.score : null
+        }))
+      };
+      try {
+        localStorage.setItem('magihub_last_assessment_payload', JSON.stringify(sheetsPayload));
+      } catch (err) {
+        console.warn('No se pudo guardar la copia local de respaldo', err);
+      }
+      sendAssessmentToSheets(sheetsPayload);
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    async function sendAssessmentToSheets(payload) {
+      const status = document.getElementById('save-status');
+      status.classList.remove('hidden');
+      if (!MAGIHUB_SHEETS_ENDPOINT || MAGIHUB_SHEETS_ENDPOINT.includes('PEGA_AQUI')) {
+        status.textContent = 'Diagnóstico calculado. Falta conectar Google Sheets: configura la URL de Apps Script antes de publicar. Puedes descargar el respaldo JSON.';
+        status.className = 'rounded-xl border border-amber-800 bg-amber-950/40 p-4 text-sm text-amber-200 no-print';
+        return;
+      }
+      status.textContent = 'Enviando tu diagnóstico a MagiHub…';
+      status.className = 'rounded-xl border border-gray-700 bg-gray-900/80 p-4 text-sm text-gray-300 no-print';
+      try {
+        // text/plain evita una solicitud CORS preflight. En modo no-cors el navegador
+        // oculta la respuesta; esto confirma el envío del navegador, no la escritura final.
+        await fetch(MAGIHUB_SHEETS_ENDPOINT, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+          body: JSON.stringify(payload)
+        });
+        status.textContent = 'Solicitud de guardado enviada. La confirmación final debe verificarse en la hoja de Google Sheets. Si no aparece tras un minuto, descarga el JSON y revisa la configuración del despliegue.';
+        status.className = 'rounded-xl border border-cyan-800 bg-cyan-950/40 p-4 text-sm text-cyan-100 no-print';
+      } catch (err) {
+        console.error('Error enviando diagnóstico a Google Sheets', err);
+        status.textContent = 'No pudimos enviar el diagnóstico. Tus resultados siguen visibles; descarga el respaldo JSON y vuelve a intentarlo más tarde.';
+        status.className = 'rounded-xl border border-rose-800 bg-rose-950/40 p-4 text-sm text-rose-100 no-print';
+      }
+    }
+
+    function renderDimensionBreakdown(dimStats) {
+      const container = document.getElementById('dimensions-breakdown-list');
+      container.innerHTML = '';
+
+      dimStats.forEach(d => {
+        let barColor = 'from-rose-500 to-amber-500';
+        let statusBadge = `<span class="text-rose-400 font-semibold text-xs">Atención prioritaria</span>`;
+        if (d.pct >= 75) {
+          barColor = 'from-cyan-400 to-emerald-400';
+          statusBadge = `<span class="text-emerald-400 font-semibold text-xs">Avanzado</span>`;
+        } else if (d.pct >= 50) {
+          barColor = 'from-indigo-500 to-cyan-400';
+          statusBadge = `<span class="text-cyan-300 font-semibold text-xs">En desarrollo</span>`;
+        } else if (d.pct >= 25) {
+          barColor = 'from-amber-500 to-indigo-500';
+          statusBadge = `<span class="text-amber-400 font-semibold text-xs">Inicial</span>`;
+        }
+
+        const item = document.createElement('div');
+        item.className = "p-3.5 rounded-xl bg-gray-900/50 border border-gray-800/80";
+        item.innerHTML = `
+          <div class="flex items-center justify-between mb-2 text-xs sm:text-sm">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
+              <span class="font-semibold text-white">Dimensión ${d.id}: ${d.name}</span>
+            </div>
+            <div class="flex items-center gap-3">
+              ${statusBadge}
+              <span class="font-bold font-mono text-white">${d.pct}%</span>
+            </div>
+          </div>
+          <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r ${barColor} rounded-full transition-all duration-700" style="width: ${d.pct}%"></div>
+          </div>
+          ${d.unknownCount > 0 ? `<div class="text-[11px] text-gray-500 mt-1.5 flex items-center gap-1"><i data-lucide="help-circle" class="w-3 h-3 text-amber-500/70 inline"></i> ${d.unknownCount} pregunta(s) sin visibilidad en esta dimensión</div>` : ''}
+        `;
+        container.appendChild(item);
+      });
+    }
+
+    function renderActionPlan(dimStats, challenge) {
+      const container = document.getElementById('recommendations-container');
+      container.innerHTML = '';
+
+      // Find the weakest 2 dimensions
+      const sortedDims = [...dimStats].sort((a, b) => a.pct - b.pct);
+      const weakest1 = sortedDims[0];
+      const weakest2 = sortedDims[1];
+
+      // Library of specific actionable recommendations
+      const recommendationsBank = {
+        1: { // Estrategia
+          title: "Formalizar Comité de IA y Criterios de Aprobación",
+          desc: "Define un órgano ligero que clasifique casos de uso por valor/riesgo antes de aprobar gastos y suscripciones técnicas.",
+          tag: "Gobernanza & Negocio"
+        },
+        2: { // Inventario
+          title: "Censo y Descubrimiento de 'Shadow AI'",
+          desc: "Implementa un catálogo centralizado de herramientas y modelos utilizados por los colaboradores, identificando APIs no reguladas.",
+          tag: "Visibilidad Inmediata"
+        },
+        3: { // Riesgos y Seguridad
+          title: "Guardrails y Filtros DLP para LLMs",
+          desc: "Aplica pasarelas de seguridad para bloquear el ingreso de credenciales, datos de clientes o secretos industriales en prompts.",
+          tag: "Ciberseguridad & Privacidad"
+        },
+        4: { // Políticas y Compliance
+          title: "Publicación de Política de Uso Aceptable de IA",
+          desc: "Comunica directrices claras a todos los empleados sobre qué herramientas están autorizadas, con trazabilidad de decisiones.",
+          tag: "Compliance & Legal"
+        },
+        5: { // Monitoreo
+          title: "Monitoreo de Alucinaciones y Desempeño",
+          desc: "Establece controles periódicos para auditar respuestas incorrectas, degradación de modelos y derivas de comportamiento.",
+          tag: "Calidad Operativa"
+        },
+        6: { // Costos
+          title: "Implementación de FinOps para IA",
+          desc: "Etiqueta el gasto de tokens por centro de costos y audita consumos redundantes entre diferentes licencias corporativas.",
+          tag: "Control de Costos"
+        },
+        7: { // Integración
+          title: "Capa de Abstracción para Modelos (Gateway)",
+          desc: "Evita el vendor lock-in implementando un gateway único que permita alternar entre OpenAI, Claude u open-source sin reescribir código.",
+          tag: "Arquitectura Técnica"
+        }
+      };
+
+      // Priority 1 from weakest dimension
+      const rec1 = recommendationsBank[weakest1.id];
+      // Priority 2 from second weakest dimension
+      const rec2 = recommendationsBank[weakest2.id];
+
+      // Priority 3 based specifically on the selected challenge
+      let rec3 = {
+        title: "Protocolo de Auditoría y Mitigación",
+        desc: "Establecer revisiones trimestrales de cumplimiento y matriz de impacto según las directrices emergentes de IA.",
+        tag: "Estratégico"
+      };
+
+      if (challenge.includes("Riesgos")) {
+        rec3 = {
+          title: "Matriz de Riesgo y Protocolo de Incidentes IA",
+          desc: "Crea un playbook específico para reaccionar ante fugas de información, respuestas sesgadas o vulnerabilidades de inyección de prompts.",
+          tag: "Gestión de Incidentes"
+        };
+      } else if (challenge.includes("Shadow AI") || challenge.includes("Visibilidad")) {
+        rec3 = {
+          title: "Portal Corporativo de Acceso Seguro a IA",
+          desc: "Ofrece a los colaboradores una alternativa oficial y gobernada (Enterprise Hub) para desincentivar el uso de cuentas personales.",
+          tag: "Adopción Segura"
+        };
+      } else if (challenge.includes("Costos")) {
+        rec3 = {
+          title: "Auditoría de Tokenomics y Cuotas de Uso",
+          desc: "Configura límites de presupuesto (hard & soft limits) por equipo y detecta solicitudes concurrentes o prompts ineficientes.",
+          tag: "Optimización FinOps"
+        };
+      } else if (challenge.includes("Cumplimiento") || challenge.includes("Políticas")) {
+        rec3 = {
+          title: "Marco de Trazabilidad y Evidencia Regulatoria",
+          desc: "Registra sistemáticamente versiones de modelos, fuentes de datos y consentimientos legales para auditorías internas o externas.",
+          tag: "Auditoría Regulatoria"
+        };
+      } else if (challenge.includes("Integración")) {
+        rec3 = {
+          title: "Estandarización de SDKs y Agentes Corporativos",
+          desc: "Crea componentes y librerías internas reutilizables para que cualquier departamento despliegue IA con seguridad embebida.",
+          tag: "Escalamiento Ágil"
+        };
+      }
+
+      const cardsData = [
+        { ...rec1, step: "Días 1 - 30", origin: `Brecha en ${weakest1.name}` },
+        { ...rec2, step: "Días 31 - 60", origin: `Brecha en ${weakest2.name}` },
+        { ...rec3, step: "Días 61 - 90", origin: `Foco en ${challenge}` }
+      ];
+
+      cardsData.forEach(c => {
+        const card = document.createElement('div');
+        card.className = "bg-gray-900/80 p-5 rounded-2xl border border-gray-800 flex flex-col justify-between hover:border-gray-700 transition";
+        card.innerHTML = `
+          <div>
+            <div class="flex items-center justify-between text-[11px] mb-2 font-mono">
+              <span class="text-cyan-400 font-bold tracking-wider uppercase">${c.step}</span>
+              <span class="px-2 py-0.5 rounded bg-indigo-950 text-indigo-300 border border-indigo-800/40">${c.tag}</span>
+            </div>
+            <h4 class="text-base font-bold text-white mb-2">${c.title}</h4>
+            <p class="text-xs text-gray-300 leading-relaxed">${c.desc}</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-gray-800 text-[10px] text-gray-500 font-mono">
+            Origen: ${c.origin}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // --- 5. CRM / EXPORT SIMULATION & ACTIONS ---
+    function exportDataJSON() {
+      const payload = {
+        metadata: {
+          assessment: "Diagnóstico de Gobernanza y Madurez de IA",
+          company_evaluator: "MagiHub",
+          date: new Date().toISOString()
+        },
+        lead: userProfile,
+        responses: answers.map((a, i) => ({
+          question_number: i + 1,
+          question_text: QUESTIONS[i].text,
+          dimension_id: QUESTIONS[i].dimId,
+          score_selected: a ? a.score : null
+        }))
+      };
+
+      const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(payload, null, 2));
+      const downloadAnchor = document.createElement('a');
+      downloadAnchor.setAttribute("href", dataStr);
+      downloadAnchor.setAttribute("download", `MagiHub_Diagnostico_${(userProfile.company || 'Empresa').replace(/\s+/g, '_')}.json`);
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+    }
+
+    function handleSimulateSchedule() {
+      const msg = document.getElementById('booking-msg');
+      const emailSpan = document.getElementById('booking-email-confirm');
+      emailSpan.textContent = userProfile.email || 'tu correo';
+      msg.classList.remove('hidden');
+
+      // Scroll smoothly to message
+      msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Initialize Lucide icons on DOM ready
+    window.onload = function() {
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    };
+  </script>
+</body>
+</html>
